@@ -39,7 +39,6 @@ GtkSpinner {
 
 #statusbar > GtkEventBox {
 	background-image: none;
-	background-color: white;
 }
 
 #statusbar > GtkEventBox .entry {
@@ -51,24 +50,48 @@ GtkEventBox#red,
 .entry#red {
 	background-image: none;
 	background-color: @red;
+	color: black;
 }
 
 GtkEventBox#yellow,
 .entry#yellow {
 	background-image: none;
 	background-color: @yellow;
+	color: black;
 }
 
 GtkEventBox#green,
 .entry#green {
 	background-image: none;
 	background-color: @green;
+	color: black;
 }
 
 GtkEventBox#blue,
 .entry#blue {
 	background-image: none;
 	background-color: @blue;
+	color: black;
+}
+
+GtkEventBox#red .entry,
+GtkEventBox#red .label {
+	color: black;
+}
+
+GtkEventBox#yellow .entry,
+GtkEventBox#yellow .label {
+	color: black;
+}
+
+GtkEventBox#green .entry,
+GtkEventBox#green .label {
+	color: black;
+}
+
+GtkEventBox#blue .entry,
+GtkEventBox#blue .label {
+	color: black;
 }
 
 .entry:selected,
