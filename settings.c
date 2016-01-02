@@ -152,6 +152,7 @@ int		add_http_accept(struct settings *, char *);
 int		add_cmd_alias(struct settings *, char *);
 int		add_custom_uri(struct settings *, char *);
 int		add_force_https(struct settings *, char *);
+int		add_adblock_filter(struct settings *s, char *value);
 
 int		set_append_next(char *);
 int		set_autofocus_onload(char *);
@@ -370,7 +371,7 @@ struct special		s_mime = {
 };
 
 struct special		s_js = {
-	add_js_wl,
+add_js_wl,
 	NULL,
 	walk_js_wl,
 	{ NULL }
@@ -502,6 +503,13 @@ struct special		s_gnutls_priority_string = {
 	{ NULL }
 };
 
+struct special		s_adblock = {
+	add_adblock_filter,
+	NULL,
+	NULL,
+	{ NULL }
+};
+
 struct settings		rs[] = {
 	{ "allow_insecure_content",	XT_S_BOOL, 0,		&allow_insecure_content, NULL, NULL, NULL, set_allow_insecure_content, check_allow_insecure_content, TT_ALLOW_INSECURE_CONTENT },
 	{ "allow_insecure_scripts",	XT_S_BOOL, 0,		&allow_insecure_scripts, NULL, NULL, NULL, set_allow_insecure_scripts, check_allow_insecure_scripts, TT_ALLOW_INSECURE_SCRIPTS},
@@ -598,6 +606,7 @@ struct settings		rs[] = {
 	{ "mime_type",			XT_S_STR, XT_SF_RUNTIME, NULL, NULL, &s_mime, NULL, NULL },
 	{ "pl_wl",			XT_S_STR, XT_SF_RUNTIME, NULL, NULL, &s_pl, NULL, NULL },
 	{ "user_agent",			XT_S_STR, XT_SF_RUNTIME, NULL, NULL, &s_ua, NULL, NULL },
+	{ "adblock_filter",		XT_S_STR, XT_SF_RUNTIME, NULL, NULL, &s_adblock, NULL, NULL},
 };
 
 int
@@ -1938,6 +1947,22 @@ walk_cmd_alias(struct settings *s,
 		snprintf(buf, sizeof buf, "%s --> %s", c->alias, c->cmd);
 		cb(s, buf, cb_args);
 	}
+}
+
+int
+add_adblock_filter(struct settings *s, char *value)
+{
+	char			path[PATH_MAX];
+	FILE			*f;
+
+	expand_tilde(path, sizeof(path), value);
+	if ((f = fopen(path, "r")) == NULL) {
+		return (-1);
+	}
+	adblock_load_filter(&ad_filter, f);
+	fclose(f);
+
+	return (0);
 }
 
 int

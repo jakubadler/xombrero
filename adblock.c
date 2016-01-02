@@ -110,10 +110,9 @@ parse_line(struct ad_filter *filter, const char *line)
 		}
 	}
 	pattern = g_strndup(line, i);
-	if (!pattern)
-		return FALSE;
 
 	if (exception) {
+		/* TODO: more reasonable allocation */
 		filter->n_exc_patterns++;
 		filter->exc_patterns = g_realloc(filter->exc_patterns, filter->n_exc_patterns * sizeof(char *));
 		filter->exc_patterns[filter->n_exc_patterns-1] = pattern;
@@ -128,6 +127,19 @@ parse_line(struct ad_filter *filter, const char *line)
 	return TRUE;
 }
 
+void
+adblock_init_filter(struct ad_filter *filter)
+{
+	if (!filter)
+		return;
+
+	filter->patterns = NULL;
+	filter->n_patterns = 0;
+
+	filter->exc_patterns = NULL;
+	filter->n_exc_patterns = 0;
+}
+
 int
 adblock_load_filter(struct ad_filter *filter, FILE *f)
 {
@@ -135,20 +147,12 @@ adblock_load_filter(struct ad_filter *filter, FILE *f)
 	char *line_s;
 	size_t len = 0;
 
-	filter->patterns = NULL;
-	filter->n_patterns = 0;
-
-	filter->exc_patterns = NULL;
-	filter->n_exc_patterns = 0;
-
 	while ((line = fgetln(f, &len))) {
 		if (line[len-1] == '\n')
 			len--;
 		line_s = g_strndup(line, len);
-		if (line_s) {
-			parse_line(filter, line_s);
-			g_free(line_s);
-		}
+		parse_line(filter, line_s);
+		g_free(line_s);
 	}
 
 	if (line)

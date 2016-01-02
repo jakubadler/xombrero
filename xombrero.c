@@ -8630,6 +8630,9 @@ main(int argc, char **argv)
 	g_free(path);
 	stylesheet = g_strdup(userstyle);
 
+	/* init adblock */
+	adblock_init_filter(&ad_filter);
+
 	/* set statically allocated (struct special) settings */
 	if (strlen(default_script) == 0)
 		expand_tilde(default_script, sizeof default_script,
@@ -8873,14 +8876,6 @@ main(int argc, char **argv)
 	    (NUM_COLS, G_TYPE_UINT, GDK_TYPE_PIXBUF, G_TYPE_STRING);
 
 	qmarks_load();
-
-	/* adblock */
-	path = g_strdup_printf("%s" PS "easylist.txt", work_dir);
-	if ((f = fopen(path, "r"))) {
-		adblock_load_filter(&ad_filter, f);
-		fclose(f);
-	}
-	g_free(path);
 
 	/* go graphical */
 	create_canvas();
