@@ -607,6 +607,20 @@ void		input_autofocus(struct tab *);
 void		*input_check_mode(struct tab *);
 int		command_mode(struct tab *, struct karg *);
 
+/* adblock */
+struct ad_filter {
+	char **patterns;
+	char **exc_patterns;
+
+	size_t n_patterns;
+	size_t n_exc_patterns;
+};
+
+struct ad_filter ad_filter;
+
+int adblock_load_filter(struct ad_filter *filter, FILE *f);
+gboolean adblock_uri_filter(const struct ad_filter *filter, const char *uri);
+
 /* settings */
 #define XT_BM_NORMAL		(0)
 #define XT_BM_WHITELIST		(1)

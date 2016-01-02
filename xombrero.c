@@ -4925,6 +4925,12 @@ webview_rrs_cb(WebKitWebView *wv, WebKitWebFrame *wf, WebKitWebResource *res,
 		return;
 	uri_s = soup_uri_to_string(uri, FALSE);
 
+	if (!adblock_uri_filter(&ad_filter, uri_s)) {
+		webkit_network_request_set_uri(request, "about:blank");
+		DPRINTF("adblock: blocked uri '%s'\n", uri_s);
+		goto done;
+	}
+
 	if (strcmp(uri->scheme, SOUP_URI_SCHEME_HTTP) == 0) {
 		if (strict_transport_check(uri->host) ||
 		    force_https_check(uri_s)) {
@@ -8867,6 +8873,14 @@ main(int argc, char **argv)
 	    (NUM_COLS, G_TYPE_UINT, GDK_TYPE_PIXBUF, G_TYPE_STRING);
 
 	qmarks_load();
+
+	/* adblock */
+	path = g_strdup_printf("%s" PS "easylist.txt", work_dir);
+	if ((f = fopen(path, "r"))) {
+		adblock_load_filter(&ad_filter, f);
+		fclose(f);
+	}
+	g_free(path);
 
 	/* go graphical */
 	create_canvas();
