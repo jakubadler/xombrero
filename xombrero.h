@@ -614,6 +614,8 @@ struct ad_filter {
 
 	size_t n_patterns;
 	size_t n_exc_patterns;
+
+	GHashTable *hiding;
 };
 
 struct ad_filter ad_filter;
@@ -621,6 +623,7 @@ struct ad_filter ad_filter;
 void adblock_init_filter(struct ad_filter *filter);
 int adblock_load_filter(struct ad_filter *filter, FILE *f);
 gboolean adblock_uri_filter(const struct ad_filter *filter, const char *uri);
+void adblock_hide(struct tab *t);
 
 /* settings */
 #define XT_BM_NORMAL		(0)

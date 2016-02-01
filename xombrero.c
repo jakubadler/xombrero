@@ -4276,6 +4276,8 @@ notify_load_status_cb(WebKitWebView* wview, GParamSpec* pspec, struct tab *t)
 		if ((uri = get_uri(t)) == NULL)
 			return;
 
+		adblock_hide(t);
+
 		/* autorun some js if enabled */
 		js_autorun(t);
 
@@ -8929,6 +8931,8 @@ main(int argc, char **argv)
 
 	if (url_regex)
 		regfree(&url_re);
+
+	adblock_destroy_filter(&ad_filter);
 
 	return (0);
 }
