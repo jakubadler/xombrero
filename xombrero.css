@@ -41,13 +41,13 @@ spinner {
 
 #statusbar > #normal {
 	background-image: none;
-	background-color: white;
 }
 
 #statusbar .entry,
 #statusbar entry {
 	background-image: none;
 	background-color: rgba(0, 0, 0, 0);
+	border: none;
 }
 
 #red,
@@ -72,6 +72,30 @@ spinner {
 .entry#blue {
 	background-image: none;
 	background-color: @blue;
+}
+
+#red entry,
+#red .entry,
+#red {
+	color: black;
+}
+
+#yellow entry,
+#yellow .entry,
+#yellow {
+	color: black;
+}
+
+#green entry,
+#green .entry,
+#green {
+	color: black;
+}
+
+#blue entry,
+#blue .entry,
+#blue {
+	color: black;
 }
 
 .entry:selected,
