@@ -116,7 +116,7 @@ TAILQ_HEAD(command_list, command_entry);
 #define XT_COLOR_SB_SEPARATOR	"#555555"
 
 /* CSS element names */
-#define XT_CSS_NORMAL		""
+#define XT_CSS_NORMAL		"normal"
 #define XT_CSS_RED		"red"
 #define XT_CSS_YELLOW		"yellow"
 #define XT_CSS_GREEN		"green"

@@ -32,40 +32,43 @@
 }
 
 .button,
-GtkSpinner {
+GtkSpinner,
+button,
+spinner {
 	-GtkWidget-focus-padding: 0;
 	-GtkWidget-line-width: 0;
 }
 
-#statusbar > GtkEventBox {
+#statusbar > #normal {
 	background-image: none;
 	background-color: white;
 }
 
-#statusbar > GtkEventBox .entry {
+#statusbar .entry,
+#statusbar entry {
 	background-image: none;
 	background-color: rgba(0, 0, 0, 0);
 }
 
-GtkEventBox#red,
+#red,
 .entry#red {
 	background-image: none;
 	background-color: @red;
 }
 
-GtkEventBox#yellow,
+#yellow,
 .entry#yellow {
 	background-image: none;
 	background-color: @yellow;
 }
 
-GtkEventBox#green,
+#green,
 .entry#green {
 	background-image: none;
 	background-color: @green;
 }
 
-GtkEventBox#blue,
+#blue,
 .entry#blue {
 	background-image: none;
 	background-color: @blue;
@@ -104,12 +107,14 @@ GtkEventBox#blue,
 	background-color: @ct_bg;
 }
 
-#compact_tab GtkLabel {
+#compact_tab GtkLabel,
+#compact_tab label {
 	-GtkLabel-width-chars: 1;
 	color: @ct_inactive;
 	padding: 4px;
 }
 
-#compact_tab GtkLabel#active {
+#compact_tab GtkLabel#active,
+#compact_tab label#active {
 	color: @ct_active;
 }
